@@ -1,15 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, View, } from 'react-native';
+import MinMax from './componentes/MinMax';
 
 export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text>Teste!</Text>
-      <Image source={require('./assets/favicon.png')}
-        width={100}
-        height={100}
-      ></Image>
+     <MinMax min={10} max={20}/>
     </View>
   );
 }
