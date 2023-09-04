@@ -1,8 +1,8 @@
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native'
-import React, { useState } from 'react'
+import React from 'react'
+import { useState } from 'react'
 
-export default function DigiteSeuNome() {
-
+export default function Qualquernome() {
     const [nome, setNome] = useState('')
     const [valorDigitado, setValorDigitado] = useState('')
 
