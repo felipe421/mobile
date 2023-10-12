@@ -1,45 +1,20 @@
-import { FlatList, StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
-import Api from '../../services/Api'
-import { Card } from 'react-native-paper'
+import React from 'react'
+import { StyleSheet, View } from 'react-native'
+import { Text } from 'react-native-paper'
 
-export default function Posts(navigation) {
-
-    const [posts, setPosts] = useState([])
-
-    Api.get('/posts').then(response => {
-        setPosts(response.data.posts)
-    })
-
+export default function Posts() {
     return (
         <View style={styles.container}>
-            <FlatList style={styles.listPessoas}
-                data={posts}
-                renderItem={({ item }) =>
-                    <View style={{ marginTop: 10 }}>
-                        <Card mode='outlined'>
-
-                            <Card.Title title={item.title} />
-                            <Card.Content>
-                                <Text variant="titleLarge">{item.body}</Text>
-
-                            </Card.Content>
-                        </Card>
-                    </View>
-                }
-            // showsVerticalScrollIndicator={false}
-            />
+            <Text variant='displayLarge'>Posts</Text>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 10,
+        flex: 1,
         justifyContent: 'center',
-        alignContent: 'center'
-    },
-    listPessoas: {
-        width: '90%',
+        alignItems: 'center'
     }
+
 })
