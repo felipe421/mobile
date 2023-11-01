@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native'
 import { Button, Text, TextInput } from 'react-native-paper'
 import Toast from 'react-native-toast-message'
 
-export default function FormAlunos({ navigation, route }) {
+export default function FormAlunosAsyncStorage({ navigation, route }) {
 
     const { acao, aluno: alunoAntiga } = route.params
 
@@ -39,16 +39,14 @@ export default function FormAlunos({ navigation, route }) {
                 turno: turno,
                 curso: curso
             }
-            const objetoEmString = JSON.stringify(novaAluno)
-            console.log("🚀 ~ file: Formaluno.js:47 ~ salvar ~ objetoEmString:", objetoEmString)
 
+            const objetoEmString = JSON.stringify(novaAluno)
+            console.log(" ~ file: FormAluno.js:47 ~ salvar ~ objetoEmString:", objetoEmString)
             console.log(typeof (objetoEmString))
 
             const objeto = JSON.parse(objetoEmString)
-            console.log("🚀 ~ file: FormAluno.js:52 ~ salvar ~ objeto:", objeto)
-
+            console.log(" ~ file: FormAluno.js:52 ~ salvar ~ objeto:", objeto)
             console.log(typeof (objeto))
-
 
             if (alunoAntiga) {
                 acao(alunoAntiga, novaAluno)
@@ -63,13 +61,11 @@ export default function FormAlunos({ navigation, route }) {
 
             navigation.goBack()
         }
-
     }
-
 
     return (
         <View style={styles.container}>
-            <Text variant='titleLarge' style={styles.title}>{alunoAntiga ? 'Editar Aluno' : 'Adionar Aluno'}</Text>
+            <Text variant='titleLarge' style={styles.title} >{alunoAntiga ? 'Editar aluno' : 'Adicionar aluno'}</Text>
 
             <View style={styles.inputContainer}>
                 <TextInput
@@ -78,6 +74,7 @@ export default function FormAlunos({ navigation, route }) {
                     mode='outlined'
                     value={nome}
                     onChangeText={text => setNome(text)}
+                    onFocus={() => setShowMensagemErro(false)}
                 />
 
                 <TextInput
@@ -87,6 +84,7 @@ export default function FormAlunos({ navigation, route }) {
                     keyboardType='numeric'
                     value={matricula}
                     onChangeText={text => setMatricula(text)}
+                    onFocus={() => setShowMensagemErro(false)}
                 />
 
                 <TextInput
@@ -95,6 +93,7 @@ export default function FormAlunos({ navigation, route }) {
                     mode='outlined'
                     value={turno}
                     onChangeText={text => setTurno(text)}
+                    onFocus={() => setShowMensagemErro(false)}
                 />
 
                 <TextInput
@@ -103,6 +102,7 @@ export default function FormAlunos({ navigation, route }) {
                     mode='outlined'
                     value={curso}
                     onChangeText={text => setCurso(text)}
+                    onFocus={() => setShowMensagemErro(false)}
                 />
 
                 {showMensagemErro &&
