@@ -11,6 +11,7 @@ export default function ListaAlunosAsyncStorage({ navigation, route }) {
     const [showModalExcluirUsuario, setShowModalExcluirUsuario] = useState(false)
     const [alunoASerExcluida, setAlunoASerExcluida] = useState(null)
 
+
     useEffect(() => {
         loadAlunos()
     }, [])
@@ -109,8 +110,8 @@ export default function ListaAlunosAsyncStorage({ navigation, route }) {
                         <Text variant="bodyMedium">Tem certeza que deseja excluir este usuário?</Text>
                     </Dialog.Content>
                     <Dialog.Actions>
-                        <Button onPress={hideModal}>Voltar</Button>
-                        <Button onPress={handleExluirAluno}>Tenho Certeza</Button>
+                        <Button onPress={hideModal}><Text>Voltar</Text></Button>
+                        <Button onPress={handleExluirAluno}><Text>Tenho Certeza</Text></Button>
                     </Dialog.Actions>
                 </Dialog>
             </Portal>

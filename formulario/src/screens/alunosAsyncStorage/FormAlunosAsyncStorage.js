@@ -66,7 +66,6 @@ export default function FormAlunosAsyncStorage({ navigation, route }) {
     return (
         <View style={styles.container}>
             <Text variant='titleLarge' style={styles.title} >{alunoAntiga ? 'Editar aluno' : 'Adicionar aluno'}</Text>
-
             <View style={styles.inputContainer}>
                 <TextInput
                     style={styles.input}
