@@ -6,8 +6,8 @@ import * as yup from 'yup'
 import { TextInputMask } from 'react-native-masked-text';
 
 
-export default function FormMembroBroze(props) {
-  const { acao, cliente: clienteAntiga } = props.route.params
+export default function FormMembroPrata(props) {
+  const { acao, clienteprata: clienteprataAntiga } = props.route.params
   console.log(props)
 
   const [nome, setNome] = useState('')
@@ -40,7 +40,7 @@ export default function FormMembroBroze(props) {
 
   useEffect(() => {
 
-    console.log('cliente -> ', clienteAntiga)
+    console.log('clienteprata -> ', clienteprataAntiga)
 
     if (clienteAntiga) {
       setNome(clienteAntiga.nome)

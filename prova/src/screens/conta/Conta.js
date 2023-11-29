@@ -28,8 +28,8 @@ export default function Conta(props) {
           </View>
 
           <View style={styles.labelArea}>
-          <Ionicons style={styles.icon} name="call-outline" size={16} color="#DCDCDC"/>
-            <Text variant='bodyMedium' style={{ fontWeight: 'bold' }} >Telefone:</Text>
+          <Ionicons style={styles.icon} name="finger-print" size={16} color="#DCDCDC"/>
+            <Text variant='bodyMedium' style={{ fontWeight: 'bold' }} >Senha:</Text>
             <Text variant='bodyMedium' style={{ fontWeight: 'bold' }}></Text>
           </View>
 

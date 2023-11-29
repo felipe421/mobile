@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ImageBackground } from 'react-native'
 import React, { useState } from 'react'
-import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
+import { Formik } from 'formik'
 
-const schema = yup.object({
+const validationSchema = yup.object({
   username: yup.string().required("informe seu nome"),
   email: yup.string().email('Email Invalido').required('Informe seu Email'),
   password: yup.string().min(6, 'A senha deve ter pelo menos 6 digitos').required('Informe sua senha')
@@ -12,83 +12,83 @@ const schema = yup.object({
 
 export default function SignIn(props) {
   const { navigation } = props
-  const { control, handleSubmit, formState: { errors } } = useForm({
-    resolver: yupResolver(schema)
-  })
+  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
 
   function handleSignIn(data) {
     console.log(data);
   }
 
+  function salvar() {
+
+  }
 
   return (
-
     <View style={styles.container}>
-      <Text style={styles.title}>Bem Vindo</Text>
-      <Controller
-        control={control}
-        name='username'
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            style={[styles.input, {
-              borderWidth: errors.username && 1,
-              borderColor: errors.username && '#ff365b'
-            }]}
-            onChangeText={onChange}
-            onBlur={onBlur}
-            value={value}
-            placeholder='Nome'
-          />
+      <Formik
+        initialValues={{
+          username: '',
+          email: '',
+          password: ''
+        }}
+         validationSchema={validationSchema}
+        onSubmit={values => salvar(values)}
+      >
+        {({ handleChange, handleBlur, handleSubmit, touched, errors, values }) => (
+          <>
+
+            <Text style={styles.title}>Bem Vindo</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={handleChange('username')}
+              onBlur={handleBlur('username')}
+              value={values.username}
+              placeholder='Nome'
+              error={errors.username ? true : false}
+            />
+
+            {touched.username && errors.username && (
+              <Text style={{ color: 'red', textAlign: 'center' }}>{errors.username}</Text>
+            )}
+
+            <TextInput
+              style={styles.input}
+              onChangeText={handleChange('email')}
+              onBlur={handleBlur('email')}
+              value={values.email}
+              placeholder='Digite seu Email'
+              error={errors.email ? true : false}
+            />
+            {touched.email && errors.email && (
+              <Text style={{ color: 'red', textAlign: 'center' }}>{errors.email}</Text>
+            )}
+
+            <TextInput
+              style={styles.input}
+              onChangeText={handleChange('password')}
+              value={values.password}
+              placeholder='Senha'
+              secureTextEntry={true}
+              error={errors.password ? true : false}
+              onBlur={handleBlur('password')}
+            />
+            {touched.password && errors.password && (
+              <Text style={{ color: 'red', textAlign: 'center' }}>{errors.password}</Text>
+            )}
+
+            <TouchableOpacity style={styles.button} onPress={() => {
+              handleSubmit(handleSignIn)
+              props.navigation.push('Conta')
+            }}>
+              <Text style={styles.buttonText}>Acessar</Text>
+            </TouchableOpacity>
+
+          </>
         )}
-      />
-      {errors.username && <Text style={styles.labelError}>{errors.username?.message}</Text>}
-
-      <Controller
-        control={control}
-        name='email'
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            style={[styles.input, {
-              borderWidth: errors.email && 1,
-              borderColor: errors.email && '#ff365b'
-            }]}
-            onChangeText={onChange}
-            onBlur={onBlur}
-            value={value}
-            placeholder='Digite seu Email'
-          />
-        )}
-
-      />
-      {errors.email && <Text style={styles.labelError}>{errors.email?.message}</Text>}
-
-      <Controller
-        control={control}
-        name='password'
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            style={[styles.input, {
-              borderWidth: errors.password && 1,
-              borderColor: errors.password && '#ff365b'
-            }]}
-            onChangeText={onChange}
-            onBlur={onBlur}
-            value={value}
-            placeholder='Senha'
-            secureTextEntry={true}
-          />
-        )}
-
-      />
-      {errors.password && <Text style={styles.labelError}>{errors.password?.message}</Text>}
-
-      <TouchableOpacity style={styles.button} onPress={() => {
-          handleSubmit(handleSignIn)
-          props.navigation.push('Conta', {nome: 'Filipe'})
-      }}>
-        <Text style={styles.buttonText}>Acessar</Text>
-      </TouchableOpacity>
-    </View>
+      </Formik>
+    </View >
 
   )
 }

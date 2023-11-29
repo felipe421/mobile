@@ -6,63 +6,63 @@ import Toast from 'react-native-toast-message'
 
 
 export default function ListaDeMembro(props, route) {
-    const [clientes, setClientes] = useState([])
+    const [clientesprata, setClientesprata] = useState([])
     const [showModalExcluirUsuario, setShowModalExcluirUsuario] = useState(false)
-    const [clienteASerExcluida, setClienteASerExcluida] = useState(null)
+    const [clienteprataASerExcluida, setClienteprataASerExcluida] = useState(null)
 
     useEffect(() => {
-        loadClientes()
+        loadClientesprata()
     }, [])
 
-    async function loadClientes() {
-        const response = await AsyncStorage.getItem('clientes')
-        console.log(" file: ListaClientesAsyncStorage.js:21 ~ loadClientes ~ response:", response)
-        const clientesStorage = response ? JSON.parse(response) : []
-        setClientes(clientesStorage)
+    async function loadClientesprata() {
+        const response = await AsyncStorage.getItem('clientesprata')
+        console.log(" file: ListaClientesprataAsyncStorage.js:21 ~ loadClientes ~ response:", response)
+        const clientesprataStorage = response ? JSON.parse(response) : []
+        setClientesprata(clientesprataStorage)
     }
 
     const showModal = () => setShowModalExcluirUsuario(true);
     const hideModal = () => setShowModalExcluirUsuario(false);
 
-    async function adicionarCliente(cliente) {
-        let novaListaClientes = clientes
-        novaListaClientes.push(cliente)
-        await AsyncStorage.setItem('clientes', JSON.stringify(novaListaClientes));
-        setClientes(novaListaClientes)
+    async function adicionarClienteprata(clienteprata) {
+        let novaListaClientesprata = clientesprata
+        novaListaClientesprata.push(clienteprata)
+        await AsyncStorage.setItem('clientesprata', JSON.stringify(novaListaClientesprata));
+        setClientes(novaListaClientesprata)
     }
 
-    async function editarCliente(clienteAntiga, novosDados) {
-        console.log('Cliente ANTIGA -> ', clienteAntiga)
+    async function editarClienteprata(clienteprataAntiga, novosDados) {
+        console.log('Cliente ANTIGA -> ', clienteprataAntiga)
         console.log('DADOS NOVOS -> ', novosDados)
 
-        const novaListaClientes = clientes.map(cliente => {
-            if (cliente == clienteAntiga) {
+        const novaListaClientesprata = clientesprata.map(clienteprata => {
+            if (clienteprata == clienteprataAntiga) {
                 return novosDados
             } else {
-                return cliente
+                return clientesprata
             }
         })
 
-        await AsyncStorage.setItem('clientes', JSON.stringify(novaListaClientes))
-        setClientes(novaListaClientes)
+        await AsyncStorage.setItem('clientesprata', JSON.stringify(novaListaClientesprata))
+        setClientes(novaListaClientesprata)
     }
 
-    async function excluirCliente(cliente) {
-        const novaListaCliente = clientes.filter(p => p !== cliente)
-        await AsyncStorage.setItem('clientes', JSON.stringify(novaListaCliente))
-        setClientes(novaListaCliente)
+    async function excluirCliente(clienteprata) {
+        const novaListaClienteprata = clientesprata.filter(p => p !== clienteprata)
+        await AsyncStorage.setItem('clientesprata', JSON.stringify(novaListaClienteprata))
+        setClientes(novaListaClienteprata)
         Toast.show({
             type: 'success',
             text1: 'Cliente excluida com sucesso!'
         })
     }
 
-    function handleExluirCliente() {
-        excluirCliente(clienteASerExcluida)
-        setClienteASerExcluida(null)
+    function handleExluirClienteprata() {
+        excluirCliente(clienteprataASerExcluida)
+        setClienteprataASerExcluida(null)
         hideModal()
     }
-    console.log(clientes)
+    console.log(clientesprata)
     return (
         <ImageBackground source={require('../../../assets/fundo.jpg')} resizeMode='stretch' style={styles.image}>
             <View style={styles.container}>
@@ -72,7 +72,7 @@ export default function ListaDeMembro(props, route) {
                     renderItem={({ item }) =>(
                         <Card mode='outlined' style={styles.card}>
                             <Card.Title
-                                title='Membros '
+                                title='Membros de Prata '
                                 left={() => <Avatar.Image size={48} source={require('../../../assets/logo2.jpeg')} />}
                             />
                             <Card.Content style={styles.cardContent}>
@@ -85,11 +85,11 @@ export default function ListaDeMembro(props, route) {
                                 </View>
                             </Card.Content>
                             <Card.Actions>
-                                <Button onPress={() => props.navigation.push('Bronze', { acao: editarCliente, cliente: item })}>
+                                <Button onPress={() => props.navigation.push('Bronze', { acao: editarClienteprata, clienteprata: item })}>
                                     Editar
                                 </Button>
                                 <Button onPress={() => {
-                                    setClienteASerExcluida(item)
+                                    setClienteprataASerExcluida(item)
                                     showModal()
                                 }}>
                                     Excluir
@@ -102,7 +102,7 @@ export default function ListaDeMembro(props, route) {
                 <FAB
                     icon="plus"
                     style={styles.fab}
-                    onPress={() => props.navigation.push('Bronze', { acao: adicionarCliente })}
+                    onPress={() => props.navigation.push('Bronze', { acao: adicionarClienteprata })}
                 />
 
                 <Portal>
@@ -113,7 +113,7 @@ export default function ListaDeMembro(props, route) {
                         </Dialog.Content>
                         <Dialog.Actions>
                             <Button onPress={hideModal}><Text>Voltar</Text></Button>
-                            <Button onPress={handleExluirCliente}><Text>Tenho Certeza</Text></Button>
+                            <Button onPress={handleExluirClienteprata}><Text>Tenho Certeza</Text></Button>
                         </Dialog.Actions>
                     </Dialog>
                 </Portal>
